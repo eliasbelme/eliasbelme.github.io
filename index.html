@@ -238,6 +238,28 @@ footer{border-top:1.5px solid var(--ink);padding:26px 0;display:flex;justify-con
 .reveal.in{opacity:1;transform:none}
 .reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
 
+/* ============ RÉFÉRENTIEL NATIONAL ============ */
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.ref-block{border:1.5px solid var(--ink);background:var(--card);box-shadow:var(--shadow);
+  padding:24px 26px;position:relative;transition:transform .3s}
+.ref-block::before{content:"";position:absolute;top:0;left:0;width:0;height:3px;background:var(--amber);transition:width .4s}
+.ref-block:hover{transform:translateY(-4px)}
+.ref-block:hover::before{width:100%}
+.ref-comp{display:flex;align-items:center;gap:12px;border-bottom:1.5px dashed var(--line);padding-bottom:13px;margin-bottom:14px}
+.ref-comp .ref-c{font-family:'Roboto Mono',monospace;font-size:.7rem;font-weight:700;letter-spacing:1px;
+  color:#fff;background:var(--ink);padding:5px 9px;border-radius:3px;line-height:1}
+.ref-comp h3{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:600;line-height:1}
+.ref-comp .ref-code{margin-left:auto;font-family:'Roboto Mono',monospace;font-size:.72rem;color:var(--blue)}
+.ref-def{font-family:'Fraunces',serif;font-style:italic;color:var(--muted);font-size:.92rem;margin-bottom:16px}
+.ac{margin-bottom:13px}
+.ac:last-child{margin-bottom:0}
+.ac-code{font-family:'Roboto Mono',monospace;font-size:.66rem;font-weight:700;letter-spacing:.5px;
+  color:var(--amber);border:1.5px solid var(--line-strong);background:var(--amber-soft);
+  padding:2px 7px;border-radius:3px;margin-right:8px;white-space:nowrap}
+.ac-title{font-weight:500;color:var(--ink);font-size:.92rem}
+.ac p{color:var(--ink-soft);font-size:.87rem;margin-top:6px}
+.ac p .ref-tag{font-family:'Roboto Mono',monospace;font-size:.74rem;color:var(--blue)}
+
 /* ============ RESPONSIVE ============ */
 @media(max-width:980px){
   .hero-body{grid-template-columns:1fr}
@@ -250,6 +272,7 @@ footer{border-top:1.5px solid var(--ink);padding:26px 0;display:flex;justify-con
   .exp-card{grid-template-columns:1fr}
   .exp-side{border-right:0;border-bottom:1.5px solid var(--line)}
   .proj-grid{grid-template-columns:1fr}
+  .ref-grid{grid-template-columns:1fr}
   .contact-grid{grid-template-columns:1fr}
   .contact-lead{border-right:0;border-bottom:1.5px solid var(--line)}
   .contact-cards{padding:20px 44px 30px}
@@ -281,7 +304,8 @@ footer{border-top:1.5px solid var(--ink);padding:26px 0;display:flex;justify-con
     <li><a href="#competences"><span class="idx">01</span>Compétences</a></li>
     <li><a href="#experiences"><span class="idx">02</span>Expériences Pro</a></li>
     <li><a href="#projets"><span class="idx">03</span>Projets (SAÉ)</a></li>
-    <li><a href="#contact"><span class="idx">04</span>Contact</a></li>
+    <li><a href="#referentiel"><span class="idx">04</span>Référentiel</a></li>
+    <li><a href="#contact"><span class="idx">05</span>Contact</a></li>
   </ul>
 </nav>
 
@@ -571,14 +595,74 @@ footer{border-top:1.5px solid var(--ink);padding:26px 0;display:flex;justify-con
   </div>
 </section>
 
+<!-- ============ RÉFÉRENTIEL NATIONAL ============ -->
+<section id="referentiel" class="wrap">
+  <div class="sec-head reveal">
+    <div>
+      <span class="sec-tag">04 — Référentiel national GEII</span>
+      <h2 class="sec-title">Compétences &amp; apprentissages critiques</h2>
+      <p class="sec-sub">Les quatre compétences du programme national de BUT GEII — parcours ESE, niveau 3 — et leur validation concrète par mes SAÉ et mes deux stages.</p>
+    </div>
+    <span class="sec-ref">FIG. 04 · RÉFÉRENTIEL<br>NIVEAU 3 · ESE</span>
+  </div>
+
+  <div class="ref-grid ticks reveal">
+
+    <article class="ref-block">
+      <header class="ref-comp"><span class="ref-c">C1</span><h3>Concevoir</h3><span class="ref-code">AC31</span></header>
+      <p class="ref-def">Concevoir un système en adoptant une approche sélective dans ses choix.</p>
+      <div class="ac"><span class="ac-code">AC31.01</span><span class="ac-title">Contribuer à la rédaction d'un cahier des charges</span>
+        <p>Définition des besoins d'un écosystème domotique sécurisé — serrure connectée <span class="ref-tag">SAÉ.10</span> — et des contraintes de conception d'une carte du schéma au prototype <span class="ref-tag">SAÉ.01</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC31.02</span><span class="ac-title">Prouver la pertinence de ses choix technologiques</span>
+        <p>Choix Zigbee/MQTT pour la faible consommation de la serrure ; conditionnement par AOP et bascule à hystérésis retenu pour le régulateur thermique <span class="ref-tag">SAÉ.03</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC31.03</span><span class="ac-title">Rédiger un dossier de conception</span>
+        <p>Schémas, placement et routage de cartes sous KiCad et Eagle <span class="ref-tag">SAÉ.01 · SAÉ.02</span>, dossiers techniques de SAÉ documentés.</p></div>
+    </article>
+
+    <article class="ref-block">
+      <header class="ref-comp"><span class="ref-c">C2</span><h3>Vérifier</h3><span class="ref-code">AC32</span></header>
+      <p class="ref-def">Élaborer une procédure intégrant une démarche qualité pour valider un système.</p>
+      <div class="ac"><span class="ac-code">AC32.01</span><span class="ac-title">Évaluer la cause racine d'un dysfonctionnement</span>
+        <p>Débogage de la justesse de mesure du multimètre numérique <span class="ref-tag">SAÉ.02</span> et mise au point de la chaîne de régulation thermique <span class="ref-tag">SAÉ.03</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC32.02</span><span class="ac-title">Proposer une solution corrective</span>
+        <p>Réglage des correcteurs PID de la voiture autonome <span class="ref-tag">SAÉ.09</span> ; levée de réserves lors des OPR au Nouvel Hôpital Lariboisière <span class="ref-tag">EQUANS</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC32.03</span><span class="ac-title">Produire une procédure d'essais de conformité</span>
+        <p>Tests d'asservissement du SSI depuis le PCSI <span class="ref-tag">EQUANS</span> ; mesures de réponse en fréquence par FFT sur l'analyseur d'impédance <span class="ref-tag">SAÉ.05</span>.</p></div>
+    </article>
+
+    <article class="ref-block">
+      <header class="ref-comp"><span class="ref-c">C3</span><h3>Maintenir</h3><span class="ref-code">AC33</span></header>
+      <p class="ref-def">Mettre en place une stratégie de maintenance pour garantir un fonctionnement.</p>
+      <div class="ac"><span class="ac-code">AC33.01</span><span class="ac-title">Proposer une solution de maintenance</span>
+        <p>Refonte de la chaîne de saisie des rapports d'intervention via Kizeo Forms pour fiabiliser la donnée terrain <span class="ref-tag">SPIE</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC33.02</span><span class="ac-title">Évaluer les coûts d'indisponibilité et de maintenance</span>
+        <p>Optimisation des outils numériques de maintenance des machines tournantes : −30 % de temps de saisie et chute du taux d'erreurs <span class="ref-tag">SPIE</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC33.03</span><span class="ac-title">Produire une procédure de maintenance</span>
+        <p>Rédaction des modes opératoires et formation des techniciens utilisateurs aux nouveaux outils <span class="ref-tag">SPIE</span>.</p></div>
+    </article>
+
+    <article class="ref-block">
+      <header class="ref-comp"><span class="ref-c">C4</span><h3>Implanter</h3><span class="ref-code">AC34 · ESE</span></header>
+      <p class="ref-def">Interagir avec les acteurs lors de l'installation et de la mise en service d'un système.</p>
+      <div class="ac"><span class="ac-code">AC34.01</span><span class="ac-title">Produire une procédure d'installation &amp; de mise en service</span>
+        <p>Déploiement des systèmes de sûreté et courants faibles dans un ERP critique en exploitation — Nouvel Hôpital Lariboisière <span class="ref-tag">EQUANS-INEO</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC34.02</span><span class="ac-title">Exécuter la mise en service en respectant la procédure</span>
+        <p>Paramétrage des réseaux d'appels malades et d'interphonie, asservissements SSI ; intégration de la serrure connectée dans Home Assistant <span class="ref-tag">SAÉ.10</span>.</p></div>
+      <div class="ac"><span class="ac-code">AC34.03</span><span class="ac-title">Produire le dossier de conformité &amp; gérer le versionnage</span>
+        <p>Conduite des OPR et traçabilité des réserves ; versionnage du code sous GitHub <span class="ref-tag">SAÉ.09</span>.</p></div>
+    </article>
+
+  </div>
+</section>
+
 <!-- ============ CONTACT ============ -->
 <section id="contact" class="wrap">
   <div class="sec-head reveal">
     <div>
-      <span class="sec-tag">04 — Cartouche de contact</span>
+      <span class="sec-tag">05 — Cartouche de contact</span>
       <h2 class="sec-title">Échangeons</h2>
     </div>
-    <span class="sec-ref">FIG. 04 · CONTACT<br>RÉPONSE RAPIDE</span>
+    <span class="sec-ref">FIG. 05 · CONTACT<br>RÉPONSE RAPIDE</span>
   </div>
 
   <div class="contact-grid reveal">
