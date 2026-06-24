@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elias Belmeliani · Ingénieur Junior GEII — Électronique & Systèmes Embarqués</title>
+<meta name="description" content="Portfolio d'Elias Belmeliani, BUT GEII parcours Électricité et Systèmes Embarqués. Conception PCB, systèmes embarqués, automatisme industriel et intégration de systèmes critiques.">
+
+<!-- Fraunces (serif technique) + Roboto + Roboto Mono -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<style>
+/* ============ BLUEPRINT TOKENS ============ */
+:root{
+  --paper:#eef1f6;
+  --paper-2:#e6eaf2;
+  --card:#fbfcfe;
+  --ink:#15233f;          /* navy ink */
+  --ink-soft:#3a4d6e;
+  --muted:#65769a;
+  --faint:#9aa8c2;
+  --line:#c3cee0;          /* blueprint line */
+  --line-strong:#9fb0cf;
+  --blue:#2b5fa8;          /* blueprint blue */
+  --amber:#d8841c;         /* accent ambre */
+  --amber-soft:#f2e7d2;
+  --ok:#3f8f5b;
+  --shadow:0 16px 40px -22px rgba(21,35,63,.45);
+  --radius:6px;            /* anguleux = technique */
+  --nav-h:66px;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+body{
+  font-family:'Roboto',system-ui,sans-serif;
+  color:var(--ink);background:var(--paper);
+  line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+/* grille de plan technique */
+body::before{
+  content:"";position:fixed;inset:0;z-index:-2;
+  background-image:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px),
+    linear-gradient(rgba(195,206,224,.45) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(195,206,224,.45) 1px,transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  opacity:.6;
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(1200px 700px at 80% -10%,rgba(216,132,28,.06),transparent 60%),
+             radial-gradient(900px 600px at -10% 100%,rgba(43,95,168,.07),transparent 60%);
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--amber);color:#fff}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px}
+.mono{font-family:'Roboto Mono',monospace}
+.serif{font-family:'Fraunces',Georgia,serif}
+
+/* ============ SCROLL PROGRESS ============ */
+.scroll-prog{position:fixed;top:0;left:0;height:3px;width:0;z-index:1000;
+  background:var(--amber);box-shadow:0 0 0 1px rgba(216,132,28,.3)}
+
+/* ============ NAV — cartouche de dessin ============ */
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:900;
+  display:flex;align-items:center;justify-content:space-between;padding:0 26px;
+  background:rgba(238,241,246,.82);backdrop-filter:blur(10px);
+  border-bottom:1.5px solid var(--ink);transition:box-shadow .3s}
+.nav.scrolled{box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-weight:700;font-size:1.1rem;letter-spacing:.3px}
+.brand .mk{font-family:'Roboto Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:1px;
+  border:1.5px solid var(--ink);border-radius:3px;padding:3px 6px;color:var(--ink);line-height:1}
+.brand b{color:var(--amber)}
+.nav-links{display:flex;align-items:center;gap:4px;list-style:none}
+.nav-links a{font-family:'Roboto Mono',monospace;font-size:.78rem;letter-spacing:.4px;color:var(--ink-soft);
+  padding:8px 13px;border-radius:4px;position:relative;transition:.2s}
+.nav-links a:hover{color:var(--ink);background:rgba(43,95,168,.08)}
+.nav-links a .idx{color:var(--faint);margin-right:6px}
+.nav-links a.active{color:var(--amber)}
+.nav-links a.active::after{content:"";position:absolute;left:13px;right:13px;bottom:2px;height:2px;background:var(--amber)}
+.nav-toggle{display:none;background:none;border:1.5px solid var(--ink);color:var(--ink);
+  width:42px;height:38px;border-radius:4px;font-size:1.1rem;cursor:pointer}
+
+/* ============ SECTION ============ */
+section{padding:100px 0;position:relative}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;
+  border-bottom:1.5px solid var(--ink);padding-bottom:18px;margin-bottom:46px;flex-wrap:wrap}
+.sec-tag{font-family:'Roboto Mono',monospace;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--blue);display:block;margin-bottom:10px}
+.sec-title{font-family:'Fraunces',serif;font-size:clamp(1.9rem,4.4vw,3rem);font-weight:600;line-height:1.05;letter-spacing:-.5px}
+.sec-ref{font-family:'Roboto Mono',monospace;font-size:.74rem;color:var(--muted);text-align:right;white-space:nowrap}
+.sec-sub{color:var(--muted);max-width:600px;margin-top:14px}
+
+/* corner ticks (repères de coupe) */
+.ticks{position:relative}
+.ticks::before,.ticks::after{content:"";position:absolute;width:12px;height:12px;border:1.5px solid var(--line-strong)}
+.ticks::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
+.ticks::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
+
+/* ============ HERO — feuille de dessin ============ */
+.hero{min-height:100vh;display:flex;align-items:center;padding-top:var(--nav-h)}
+.hero-sheet{width:100%;border:1.5px solid var(--ink);background:rgba(251,252,254,.66);
+  box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-sheet>.corner{position:absolute;width:16px;height:16px;border:1.5px solid var(--ink)}
+.hero-sheet>.corner.tl{top:8px;left:8px;border-right:0;border-bottom:0}
+.hero-sheet>.corner.tr{top:8px;right:8px;border-left:0;border-bottom:0}
+.hero-sheet>.corner.bl{bottom:8px;left:8px;border-right:0;border-top:0}
+.hero-sheet>.corner.br{bottom:8px;right:8px;border-left:0;border-top:0}
+.hero-body{display:grid;grid-template-columns:1.25fr .75fr;gap:0}
+.hero-main{padding:54px 48px}
+.status-pill{display:inline-flex;align-items:center;gap:9px;font-family:'Roboto Mono',monospace;font-size:.72rem;
+  letter-spacing:1px;color:var(--blue);border:1.5px solid var(--line-strong);border-radius:3px;padding:6px 13px;margin-bottom:26px}
+.status-pill .live{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(63,143,91,.18);animation:pulse 1.9s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.7rem,7vw,4.8rem);font-weight:600;line-height:.98;letter-spacing:-2px}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--amber)}
+.hero .role{font-family:'Roboto Mono',monospace;font-size:clamp(.95rem,2.2vw,1.2rem);color:var(--blue);
+  margin-top:18px;min-height:1.6em}
+.hero .role .cursor{display:inline-block;width:9px;height:1.05em;background:var(--amber);margin-left:2px;vertical-align:-2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero .pitch{color:var(--ink-soft);max-width:580px;margin-top:24px;font-size:1.05rem}
+.hero-cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Roboto Mono',monospace;font-size:.84rem;font-weight:500;
+  padding:13px 22px;border-radius:4px;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s,color .2s}
+.btn-primary{background:var(--ink);color:#fff;border:1.5px solid var(--ink)}
+.btn-primary:hover{background:var(--amber);border-color:var(--amber);transform:translateY(-2px);box-shadow:var(--shadow)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+
+/* cartouche / title-block latéral */
+.hero-block{border-left:1.5px solid var(--ink);display:flex;flex-direction:column}
+.tb-row{padding:16px 22px;border-bottom:1.5px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.tb-row:last-child{border-bottom:0}
+.tb-row .k{font-family:'Roboto Mono',monospace;font-size:.62rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.tb-row .v{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink)}
+.tb-grid{display:grid;grid-template-columns:1fr 1fr}
+.tb-grid .tb-row{border-right:1.5px solid var(--line)}
+.tb-grid .tb-row:nth-child(2n){border-right:0}
+.tb-stat .v{color:var(--amber);font-size:1.5rem}
+
+/* ============ SKILLS ============ */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1.5px solid var(--ink);background:var(--card);box-shadow:var(--shadow)}
+.skill-card{padding:30px 28px;border-right:1.5px solid var(--line);position:relative;transition:background .3s}
+.skill-card:last-child{border-right:0}
+.skill-card:hover{background:#fff}
+.skill-card::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--amber);transition:width .4s}
+.skill-card:hover::after{width:100%}
+.skill-head{display:flex;align-items:center;gap:14px;margin-bottom:8px}
+.skill-icon{width:46px;height:46px;border:1.5px solid var(--ink);border-radius:4px;display:grid;place-items:center;
+  font-size:1.15rem;color:var(--ink);background:var(--paper)}
+.skill-no{font-family:'Roboto Mono',monospace;font-size:.7rem;color:var(--faint);margin-left:auto}
+.skill-card h3{font-family:'Fraunces',serif;font-size:1.18rem;font-weight:600;line-height:1.15;margin-bottom:12px}
+.skill-card>p{color:var(--muted);font-size:.9rem;margin-bottom:14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:'Roboto Mono',monospace;font-size:.72rem;padding:5px 10px;border-radius:3px;
+  border:1.5px solid var(--line-strong);color:var(--ink-soft);transition:.2s}
+.chip:hover{border-color:var(--amber);color:var(--amber);background:var(--amber-soft)}
+
+/* ============ EXPERIENCE ============ */
+.exp-list{display:grid;gap:22px}
+.exp-card{border:1.5px solid var(--ink);background:var(--card);box-shadow:var(--shadow);
+  display:grid;grid-template-columns:200px 1fr;transition:transform .3s}
+.exp-card:hover{transform:translateY(-4px)}
+.exp-side{border-right:1.5px solid var(--line);padding:26px 22px;background:var(--paper)}
+.exp-badge{font-family:'Roboto Mono',monospace;font-size:.66rem;letter-spacing:1px;text-transform:uppercase;
+  color:#fff;background:var(--ink);display:inline-block;padding:4px 9px;border-radius:3px;margin-bottom:12px}
+.exp-side .when{font-family:'Roboto Mono',monospace;font-size:.78rem;color:var(--blue)}
+.exp-side .where{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;margin-top:6px;line-height:1.2}
+.exp-main{padding:26px 28px}
+.exp-main h3{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:600;margin-bottom:4px}
+.exp-meta{font-family:'Roboto Mono',monospace;font-size:.76rem;color:var(--muted);margin-bottom:14px}
+.exp-main>p{color:var(--ink-soft);font-size:.96rem}
+.exp-main ul{list-style:none;margin-top:13px;display:grid;gap:8px}
+.exp-main li{position:relative;padding-left:24px;color:var(--ink-soft);font-size:.93rem}
+.exp-main li::before{content:"\f054";font-family:"Font Awesome 6 Free";font-weight:900;font-size:.62rem;
+  position:absolute;left:2px;top:5px;color:var(--amber)}
+.exp-main li strong,.exp-main p strong{color:var(--ink)}
+.result-tag{display:inline-flex;align-items:center;gap:9px;margin-top:16px;font-family:'Roboto Mono',monospace;
+  font-size:.8rem;color:var(--ok);border:1.5px solid rgba(63,143,91,.4);border-radius:4px;padding:8px 13px;background:rgba(63,143,91,.06)}
+
+/* ============ PROJECTS ============ */
+.proj-filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
+.filter-btn{font-family:'Roboto Mono',monospace;font-size:.78rem;padding:8px 17px;border-radius:4px;
+  border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:.2s}
+.filter-btn:hover{background:rgba(43,95,168,.08)}
+.filter-btn.active{background:var(--ink);color:#fff}
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.proj-card{border:1.5px solid var(--ink);background:var(--card);box-shadow:var(--shadow);
+  padding:26px;display:flex;flex-direction:column;position:relative;transition:transform .3s;overflow:hidden}
+.proj-card::before{content:"";position:absolute;top:0;left:0;width:0;height:3px;background:var(--amber);transition:width .4s}
+.proj-card:hover{transform:translateY(-5px)}
+.proj-card:hover::before{width:100%}
+.proj-card.hide{display:none}
+.proj-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  border-bottom:1.5px dashed var(--line);padding-bottom:14px;margin-bottom:14px}
+.proj-fig{font-family:'Roboto Mono',monospace;font-size:.7rem;letter-spacing:1px;color:var(--muted)}
+.proj-num{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:600;line-height:.8;color:var(--ink)}
+.proj-num small{color:var(--amber)}
+.year-tag{font-family:'Roboto Mono',monospace;font-size:.66rem;padding:5px 10px;border-radius:3px;
+  border:1.5px solid var(--line-strong);color:var(--blue);white-space:nowrap}
+.proj-card h3{font-family:'Fraunces',serif;font-size:1.22rem;font-weight:600;line-height:1.2;margin-bottom:14px}
+.proj-block{margin-bottom:11px;display:grid;grid-template-columns:74px 1fr;gap:10px;align-items:baseline}
+.proj-block .lbl{font-family:'Roboto Mono',monospace;font-size:.64rem;letter-spacing:1px;text-transform:uppercase;color:var(--blue);padding-top:2px}
+.proj-block p{color:var(--ink-soft);font-size:.9rem}
+.proj-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:16px;border-top:1.5px dashed var(--line)}
+.proj-tools .chip{font-size:.68rem;padding:4px 9px}
+
+/* ============ CONTACT ============ */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start;
+  border:1.5px solid var(--ink);background:rgba(251,252,254,.6);box-shadow:var(--shadow)}
+.contact-lead{padding:44px;border-right:1.5px solid var(--line)}
+.contact-lead h2{font-family:'Fraunces',serif;font-size:clamp(1.9rem,4vw,2.8rem);font-weight:600;line-height:1.05;margin-bottom:18px}
+.contact-lead h2 em{font-style:italic;color:var(--amber);font-weight:500}
+.contact-lead p{color:var(--ink-soft);max-width:440px}
+.contact-cards{padding:30px 44px 30px 0;display:grid;gap:0}
+.cc{display:flex;align-items:center;gap:18px;padding:18px 0;border-bottom:1.5px solid var(--line);transition:.25s}
+.cc:last-child{border-bottom:0}
+.cc:hover{padding-left:10px}
+.cc-icon{width:46px;height:46px;border:1.5px solid var(--ink);border-radius:4px;display:grid;place-items:center;
+  font-size:1.15rem;color:var(--ink);background:var(--paper);flex-shrink:0;transition:.25s}
+.cc:hover .cc-icon{background:var(--ink);color:#fff}
+.cc .t{font-family:'Roboto Mono',monospace;font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.cc .v{font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;color:var(--ink)}
+.cc .arrow{margin-left:auto;color:var(--faint);transition:.25s}
+.cc:hover .arrow{color:var(--amber);transform:translateX(4px)}
+
+footer{border-top:1.5px solid var(--ink);padding:26px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-family:'Roboto Mono',monospace;font-size:.74rem;color:var(--muted)}
+
+/* ============ REVEAL ============ */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}.reveal.d3{transition-delay:.24s}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:980px){
+  .hero-body{grid-template-columns:1fr}
+  .hero-main{padding:40px 30px}
+  .hero-block{border-left:0;border-top:1.5px solid var(--ink)}
+  .tb-grid .tb-row:nth-child(1),.tb-grid .tb-row:nth-child(3){border-right:1.5px solid var(--line)}
+  .skills-grid{grid-template-columns:1fr}
+  .skill-card{border-right:0;border-bottom:1.5px solid var(--line)}
+  .skill-card:last-child{border-bottom:0}
+  .exp-card{grid-template-columns:1fr}
+  .exp-side{border-right:0;border-bottom:1.5px solid var(--line)}
+  .proj-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .contact-lead{border-right:0;border-bottom:1.5px solid var(--line)}
+  .contact-cards{padding:20px 44px 30px}
+}
+@media(max-width:720px){
+  .nav-toggle{display:block}
+  .nav-links{position:fixed;top:var(--nav-h);left:0;right:0;flex-direction:column;align-items:stretch;gap:0;
+    background:var(--paper);border-bottom:1.5px solid var(--ink);padding:8px;
+    transform:translateY(-140%);transition:transform .4s;pointer-events:none;box-shadow:var(--shadow)}
+  .nav-links.open{transform:translateY(0);pointer-events:auto}
+  .nav-links a{padding:14px;border-radius:4px}
+  .nav-links a.active::after{display:none}
+  section{padding:74px 0}
+  .sec-ref{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="scroll-prog" id="prog"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#accueil" class="brand"><span class="mk">EB</span>Belmeliani<b>.</b></a>
+  <button class="nav-toggle" id="navToggle" aria-label="Ouvrir le menu"><i class="fa-solid fa-bars"></i></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#accueil" class="active"><span class="idx">00</span>Accueil</a></li>
+    <li><a href="#competences"><span class="idx">01</span>Compétences</a></li>
+    <li><a href="#experiences"><span class="idx">02</span>Expériences Pro</a></li>
+    <li><a href="#projets"><span class="idx">03</span>Projets (SAÉ)</a></li>
+    <li><a href="#contact"><span class="idx">04</span>Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero wrap" id="accueil">
+  <div class="hero-sheet reveal">
+    <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+    <div class="hero-body">
+      <div class="hero-main">
+        <div class="status-pill"><span class="live"></span>DISPONIBLE · BUT3 GEII — ÉLECTRICITÉ &amp; SYSTÈMES EMBARQUÉS</div>
+        <h1>Elias<br><em>Belmeliani</em></h1>
+        <p class="role"><span id="typed"></span><span class="cursor"></span></p>
+        <p class="pitch">Trois années d'expertise en <strong>conception électronique</strong>, <strong>automatisation industrielle</strong> et <strong>intégration de systèmes critiques</strong>. Je conçois et fiabilise des systèmes de bout en bout — du routage de la carte au déploiement sur site.</p>
+        <div class="hero-cta">
+          <a href="#projets" class="btn btn-primary"><i class="fa-solid fa-compass-drafting"></i> Explorer mes projets</a>
+          <a href="#contact" class="btn btn-ghost"><i class="fa-solid fa-paper-plane"></i> Me contacter</a>
+        </div>
+      </div>
+
+      <!-- cartouche (title block) -->
+      <aside class="hero-block">
+        <div class="tb-row">
+          <span class="k">Titre</span>
+          <span class="v">Technicien Sup. / Ingénieur Junior</span>
+        </div>
+        <div class="tb-row">
+          <span class="k">Spécialité</span>
+          <span class="v">Électronique &amp; Systèmes Embarqués</span>
+        </div>
+        <div class="tb-grid">
+          <div class="tb-row tb-stat"><span class="k">SAÉ</span><span class="v">10</span></div>
+          <div class="tb-row tb-stat"><span class="k">Stages</span><span class="v">02</span></div>
+          <div class="tb-row tb-stat"><span class="k">Saisie</span><span class="v">−30%</span></div>
+          <div class="tb-row tb-stat"><span class="k">Année</span><span class="v">BUT3</span></div>
+        </div>
+        <div class="tb-row">
+          <span class="k">Réf. document</span>
+          <span class="v mono" style="font-size:.85rem">PORTFOLIO–EB–2026</span>
+        </div>
+      </aside>
+    </div>
+  </div>
+</header>
+
+<!-- ============ COMPÉTENCES ============ -->
+<section id="competences" class="wrap">
+  <div class="sec-head reveal">
+    <div>
+      <span class="sec-tag">01 — Nomenclature des compétences</span>
+      <h2 class="sec-title">Compétences techniques</h2>
+    </div>
+    <span class="sec-ref">FIG. 01 · STACK<br>ÉCH. 1:1</span>
+  </div>
+
+  <div class="skills-grid ticks reveal">
+    <article class="skill-card">
+      <div class="skill-head">
+        <div class="skill-icon"><i class="fa-solid fa-bezier-curve"></i></div>
+        <span class="skill-no">A.01</span>
+      </div>
+      <h3>Électronique</h3>
+      <p>Conception, routage et mise au point de cartes analogiques et numériques.</p>
+      <div class="chips">
+        <span class="chip">Routage PCB</span><span class="chip">KiCad</span><span class="chip">Eagle</span>
+        <span class="chip">Amplification AOP</span><span class="chip">Soudure CMS</span>
+      </div>
+    </article>
+
+    <article class="skill-card">
+      <div class="skill-head">
+        <div class="skill-icon"><i class="fa-solid fa-microchip"></i></div>
+        <span class="skill-no">A.02</span>
+      </div>
+      <h3>Systèmes Embarqués &amp; Programmation</h3>
+      <p>Du firmware bas niveau à la logique programmable sur cible.</p>
+      <div class="chips">
+        <span class="chip">C / C++</span><span class="chip">VHDL</span><span class="chip">Python</span>
+        <span class="chip">STM32</span><span class="chip">Arduino</span><span class="chip">Pi Pico</span>
+      </div>
+    </article>
+
+    <article class="skill-card">
+      <div class="skill-head">
+        <div class="skill-icon"><i class="fa-solid fa-industry"></i></div>
+        <span class="skill-no">A.03</span>
+      </div>
+      <h3>Automatisme &amp; Énergie</h3>
+      <p>Supervision, GTB/GTC et conception d'installations électriques.</p>
+      <div class="chips">
+        <span class="chip">Unity Pro XL</span><span class="chip">Grafcet</span><span class="chip">GTB / GTC</span>
+        <span class="chip">Modbus IP</span><span class="chip">Armoires élec.</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ EXPÉRIENCES ============ -->
+<section id="experiences" class="wrap">
+  <div class="sec-head reveal">
+    <div>
+      <span class="sec-tag">02 — Relevé d'interventions</span>
+      <h2 class="sec-title">Expériences professionnelles</h2>
+    </div>
+    <span class="sec-ref">FIG. 02 · TERRAIN<br>2 STAGES</span>
+  </div>
+
+  <div class="exp-list">
+    <article class="exp-card reveal">
+      <div class="exp-side">
+        <span class="exp-badge">Stage · 3ᵉ année</span>
+        <div class="when">EQUANS — INEO</div>
+        <div class="where">Nouvel Hôpital Lariboisière</div>
+      </div>
+      <div class="exp-main">
+        <h3>Sûreté &amp; Courants Faibles</h3>
+        <div class="exp-meta">ERP type U, cat. 1 · environnement critique en exploitation</div>
+        <p>J'ai contribué au déploiement des systèmes de sûreté et de courants faibles dans un milieu hospitalier où la fiabilité et la traçabilité ne tolèrent aucun écart.</p>
+        <ul>
+          <li>Paramétrage des réseaux d'<strong>appels malades</strong> et d'<strong>interphonie</strong>.</li>
+          <li>Tests d'<strong>asservissement du Système de Sécurité Incendie (SSI)</strong> depuis le PCSI.</li>
+          <li>Conduite des <strong>Opérations Préalables à la Réception (OPR)</strong> et levée de réserves.</li>
+        </ul>
+        <span class="result-tag"><i class="fa-solid fa-shield-halved"></i> Intégration validée en environnement critique sous exploitation</span>
+      </div>
+    </article>
+
+    <article class="exp-card reveal d1">
+      <div class="exp-side">
+        <span class="exp-badge">Stage · 2ᵉ année</span>
+        <div class="when">SPIE INDUSTRIE</div>
+        <div class="where">Drive and Motor Services</div>
+      </div>
+      <div class="exp-main">
+        <h3>Digitalisation de la maintenance</h3>
+        <div class="exp-meta">Machines tournantes · optimisation des outils numériques</div>
+        <p>Mission : fiabiliser la donnée terrain des techniciens de maintenance via une refonte complète de la chaîne de saisie.</p>
+        <ul>
+          <li>Refonte des <strong>rapports d'intervention</strong> via <strong>Kizeo Forms</strong>.</li>
+          <li><strong>Balises</strong>, <strong>codes REGEX</strong> et <strong>listes dynamiques</strong> pour fiabiliser la data.</li>
+          <li>Formation des utilisateurs et rédaction des <strong>modes opératoires</strong>.</li>
+        </ul>
+        <span class="result-tag"><i class="fa-solid fa-chart-line"></i> −30 % de temps de saisie · chute drastique du taux d'erreurs</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ PROJETS / SAÉ ============ -->
+<section id="projets" class="wrap">
+  <div class="sec-head reveal">
+    <div>
+      <span class="sec-tag">03 — Planche des projets</span>
+      <h2 class="sec-title">Projets académiques &amp; SAÉ</h2>
+    </div>
+    <span class="sec-ref">FIG. 03 · 10 PLANCHES<br>CONTEXTE / OUTILS / RÉSULTATS</span>
+  </div>
+
+  <div class="proj-filters reveal">
+    <button class="filter-btn active" data-filter="all">Toutes</button>
+    <button class="filter-btn" data-filter="y1">1ʳᵉ année</button>
+    <button class="filter-btn" data-filter="y2">2ᵉ année</button>
+    <button class="filter-btn" data-filter="y3">3ᵉ année</button>
+  </div>
+
+  <div class="proj-grid" id="projGrid">
+
+    <article class="proj-card reveal" data-year="y1">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.01</div><div class="proj-num">0<small>1</small></div></div>
+        <span class="year-tag">1ʳᵉ année</span>
+      </div>
+      <h3>Conception &amp; Routage de Carte Électronique</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Concevoir une carte fonctionnelle du schéma au prototype soudé en maîtrisant tout le flux de production.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>KiCad · soudure CMS &amp; traversant</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Schéma, placement et routage du PCB, câblage et soudure ; carte assemblée et testée en conditions réelles.</p></div>
+      <div class="proj-tools"><span class="chip">KiCad</span><span class="chip">PCB</span><span class="chip">CMS</span></div>
+    </article>
+
+    <article class="proj-card reveal d1" data-year="y1">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.02</div><div class="proj-num">0<small>2</small></div></div>
+        <span class="year-tag">1ʳᵉ année</span>
+      </div>
+      <h3>Multimètre Numérique</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Développer un instrument de mesure numérique fiable à partir d'une architecture dédiée.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>Arduino · Eagle · ponts diviseurs</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Dimensionnement des ponts diviseurs, carte sous Eagle, acquisition programmée et débogage rigoureux de la justesse.</p></div>
+      <div class="proj-tools"><span class="chip">Arduino</span><span class="chip">Eagle</span><span class="chip">Métrologie</span></div>
+    </article>
+
+    <article class="proj-card reveal" data-year="y1">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.03</div><div class="proj-num">0<small>3</small></div></div>
+        <span class="year-tag">1ʳᵉ année</span>
+      </div>
+      <h3>Régulateur de Température Industriel</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Réguler une grandeur thermique via une chaîne analogique complète, du capteur à la décision.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>LM7805 · thermistance CTN · AOP · NAND</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Alimentation stabilisée, conditionnement AOP (inverseur linéaire + hystérésis) et logique NAND pour un asservissement stable.</p></div>
+      <div class="proj-tools"><span class="chip">AOP</span><span class="chip">Hystérésis</span><span class="chip">CTN</span><span class="chip">LM7805</span></div>
+    </article>
+
+    <article class="proj-card reveal d1" data-year="y1">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.04</div><div class="proj-num">0<small>4</small></div></div>
+        <span class="year-tag">1ʳᵉ année</span>
+      </div>
+      <h3>Câblage &amp; Programmation d'Armoire Électrique</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Réaliser et automatiser une armoire de commande pour piloter un procédé de production sécurisé.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>Unity Pro XL · relais de sécurité · contacteurs</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Câblage puissance/commande, intégration des relais de sécurité et séquencement via <strong>Grafcet de production</strong>.</p></div>
+      <div class="proj-tools"><span class="chip">Unity Pro XL</span><span class="chip">Grafcet</span><span class="chip">Armoire</span></div>
+    </article>
+
+    <article class="proj-card reveal" data-year="y2">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.05</div><div class="proj-num">0<small>5</small></div></div>
+        <span class="year-tag">2ᵉ année</span>
+      </div>
+      <h3>Analyseur d'Impédance de Haut-Parleur</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Caractériser la réponse fréquentielle d'un haut-parleur par mesure d'impédance.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>MATLAB · Arduino Mega · MLI/PWM</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Excitation par MLI, algorithme <strong>EasyFFT</strong> et <strong>corrélation sinusoïdale</strong> pour extraire amplitude/phase et tracer l'impédance.</p></div>
+      <div class="proj-tools"><span class="chip">MATLAB</span><span class="chip">FFT</span><span class="chip">PWM</span><span class="chip">Arduino Mega</span></div>
+    </article>
+
+    <article class="proj-card reveal d1" data-year="y2">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.06</div><div class="proj-num">0<small>6</small></div></div>
+        <span class="year-tag">2ᵉ année</span>
+      </div>
+      <h3>Commande Intelligente de Moteur Brushless</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Piloter un moteur brushless via une logique câblée temps réel sur cible programmable.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>CPLD DE0-Lite · VHDL · codeur incrémental</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Description <strong>VHDL</strong> du traitement des signaux du codeur sur CPLD : détection de position et de sens robuste.</p></div>
+      <div class="proj-tools"><span class="chip">VHDL</span><span class="chip">CPLD</span><span class="chip">Brushless</span><span class="chip">Codeur</span></div>
+    </article>
+
+    <article class="proj-card reveal" data-year="y2">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.07</div><div class="proj-num">0<small>7</small></div></div>
+        <span class="year-tag">2ᵉ année</span>
+      </div>
+      <h3>Robot Autonome Éviteur d'Obstacles</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Concevoir un robot mobile capable de percevoir son environnement et de naviguer sans collision.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>C · Pi Pico · caméra Pixy · Lidar · MPU</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Fusion des capteurs (Lidar, Pixy, MPU) et logique d'évitement en C sur Raspberry Pi Pico, navigation autonome fiable.</p></div>
+      <div class="proj-tools"><span class="chip">C</span><span class="chip">Pi Pico</span><span class="chip">Lidar</span><span class="chip">Pixy</span><span class="chip">MPU</span></div>
+    </article>
+
+    <article class="proj-card reveal d1" data-year="y2">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.08</div><div class="proj-num">0<small>8</small></div></div>
+        <span class="year-tag">2ᵉ année</span>
+      </div>
+      <h3>Station Automatisée de Traitements Multiples</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Automatiser une station gérant plusieurs procédés en parallèle de façon synchronisée.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>Automate · Unity Pro XL · relais</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Gestion <strong>parallèle</strong> du four et de la pince aspirante, actionneurs synchronisés par relais pour un cycle fluide.</p></div>
+      <div class="proj-tools"><span class="chip">Unity Pro XL</span><span class="chip">Automate</span><span class="chip">Grafcet //</span></div>
+    </article>
+
+    <article class="proj-card reveal" data-year="y2">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.09</div><div class="proj-num">0<small>9</small></div></div>
+        <span class="year-tag">2ᵉ année</span>
+      </div>
+      <h3>Interface de Contrôle pour Voiture Autonome</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Développer l'interface de supervision et de pilotage d'un véhicule autonome instrumenté.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>C++ · Qt Creator · PID · TCP · Lidar 3D · GitHub</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>IHM <strong>Qt/C++</strong>, architecture <strong>client/serveur TCP</strong>, correcteurs <strong>PID</strong> et visualisation Lidar 3D, versionnée sous GitHub.</p></div>
+      <div class="proj-tools"><span class="chip">C++</span><span class="chip">Qt</span><span class="chip">PID</span><span class="chip">TCP</span><span class="chip">Lidar 3D</span><span class="chip">GitHub</span></div>
+    </article>
+
+    <article class="proj-card reveal d1" data-year="y3">
+      <div class="proj-head">
+        <div><div class="proj-fig">SAÉ.10</div><div class="proj-num">1<small>0</small></div></div>
+        <span class="year-tag">3ᵉ année</span>
+      </div>
+      <h3>Architecture IoT &amp; Serrure Connectée</h3>
+      <div class="proj-block"><span class="lbl">Contexte</span><p>Concevoir un écosystème domotique sécurisé autour d'une serrure connectée à faible consommation.</p></div>
+      <div class="proj-block"><span class="lbl">Outils</span><p>Zigbee · Home Assistant · MQTT</p></div>
+      <div class="proj-block"><span class="lbl">Résultats</span><p>Architecture <strong>Zigbee/MQTT</strong> intégrée à Home Assistant, gestion de l'<strong>énergie embarquée</strong> et <strong>sécurisation des données</strong>.</p></div>
+      <div class="proj-tools"><span class="chip">Zigbee</span><span class="chip">MQTT</span><span class="chip">Home Assistant</span><span class="chip">IoT</span></div>
+    </article>
+
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="wrap">
+  <div class="sec-head reveal">
+    <div>
+      <span class="sec-tag">04 — Cartouche de contact</span>
+      <h2 class="sec-title">Échangeons</h2>
+    </div>
+    <span class="sec-ref">FIG. 04 · CONTACT<br>RÉPONSE RAPIDE</span>
+  </div>
+
+  <div class="contact-grid reveal">
+    <div class="contact-lead">
+      <h2>Parlons de vos <em>défis techniques</em>.</h2>
+      <p>Je serais ravi d'échanger sur mes projets, mes stages ou une opportunité en électronique, systèmes embarqués ou automatisme industriel. N'hésitez pas à me contacter — je réponds rapidement.</p>
+      <a href="Rapport%20de%20Stage.pdf.1.pdf" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:26px">
+        <i class="fa-solid fa-file-pdf"></i> Consulter mon rapport de stage 2025
+      </a>
+    </div>
+    <div class="contact-cards">
+      <a class="cc" href="tel:+33783889867">
+        <span class="cc-icon"><i class="fa-solid fa-phone"></i></span>
+        <span><span class="t">Téléphone</span><br><span class="v">07 83 88 98 67</span></span>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
+      <a class="cc" href="https://www.linkedin.com/" target="_blank" rel="noopener">
+        <span class="cc-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+        <span><span class="t">LinkedIn</span><br><span class="v">Elias Belmeliani</span></span>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
+      <a class="cc" href="https://github.com/" target="_blank" rel="noopener">
+        <span class="cc-icon"><i class="fa-brands fa-github"></i></span>
+        <span><span class="t">GitHub</span><br><span class="v">@elias-belmeliani</span></span>
+        <i class="fa-solid fa-arrow-right arrow"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>&copy; <span id="year"></span> ELIAS BELMELIANI — BUT GEII · ÉLECTRICITÉ &amp; SYSTÈMES EMBARQUÉS</span>
+  <span>RÉF. PORTFOLIO–EB–2026 · ÉCH. 1:1</span>
+</footer>
+
+<script>
+/* année */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* nav scrolled + progress */
+const nav = document.getElementById('nav'), prog = document.getElementById('prog');
+function onScroll(){
+  nav.classList.toggle('scrolled', window.scrollY > 24);
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+}
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* menu mobile */
+const toggle = document.getElementById('navToggle'), links = document.getElementById('navLinks');
+toggle.addEventListener('click', () => links.classList.toggle('open'));
+links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+
+/* scroll-spy */
+const navAnchors = [...links.querySelectorAll('a')];
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){
+    navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }});
+}, {rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('section[id], header[id]').forEach(s => spy.observe(s));
+
+/* reveal */
+const revIO = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); revIO.unobserve(e.target); } });
+}, {threshold:.12});
+document.querySelectorAll('.reveal').forEach(el => revIO.observe(el));
+
+/* typewriter */
+const phrases = [
+  "Technicien Supérieur / Ingénieur Junior — BUT GEII",
+  "Conception électronique & routage PCB",
+  "Systèmes embarqués C / C++ / VHDL",
+  "Automatisme & intégration de systèmes critiques"
+];
+const typedEl = document.getElementById('typed');
+let pi = 0, ci = 0, deleting = false;
+(function tick(){
+  const full = phrases[pi];
+  ci += deleting ? -1 : 1;
+  typedEl.textContent = full.slice(0, ci);
+  let delay = deleting ? 32 : 65;
+  if(!deleting && ci === full.length){ delay = 1900; deleting = true; }
+  else if(deleting && ci === 0){ deleting = false; pi = (pi + 1) % phrases.length; delay = 320; }
+  setTimeout(tick, delay);
+})();
+
+/* filtres projets */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projCards = document.querySelectorAll('.proj-card');
+filterBtns.forEach(btn => btn.addEventListener('click', () => {
+  filterBtns.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  projCards.forEach(c => c.classList.toggle('hide', !(f === 'all' || c.dataset.year === f)));
+}));
+</script>
+</body>
+</html>
